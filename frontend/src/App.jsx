@@ -10,18 +10,18 @@ function App() {
   // Auto-refresh every 2 seconds
   useEffect(() => {
     const interval = setInterval(() => {
-      axios.get('https://job-scheduler-rouge.vercel.app/jobs').then(res => setJobs(res.data));
+      axios.get('https://dotix-job-scheduler.vercel.app/jobs').then(res => setJobs(res.data));
     }, 2000);
     return () => clearInterval(interval);
   }, []);
 
   const createJob = () => {
-    axios.post('https://job-scheduler-rouge.vercel.app/jobs', { taskName, priority: 'High' })
+    axios.post('https://dotix-job-scheduler.vercel.app/jobs', { taskName, priority: 'High' })
       .then(() => setTaskName(''));
   };
 
   const runJob = (id) => {
-    axios.post(`https://job-scheduler-rouge.vercel.app/run-job/${id}`);
+    axios.post(`https://dotix-job-scheduler.vercel.app/run-job/${id}`);
   };
 
   return (
