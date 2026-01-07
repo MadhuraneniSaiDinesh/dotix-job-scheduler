@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-
 import './App.css'
 
 function App() {
@@ -10,18 +9,25 @@ function App() {
   // Auto-refresh every 2 seconds
   useEffect(() => {
     const interval = setInterval(() => {
-      axios.get('https://dotix-job-scheduler.vercel.app/jobs').then(res => setJobs(res.data));
+      // LINK 1: HTTPS URL
+      axios.get('https://dotix-job-scheduler.vercel.app/jobs')
+        .then(res => setJobs(res.data))
+        .catch(err => console.error("Error fetching jobs:", err));
     }, 2000);
     return () => clearInterval(interval);
   }, []);
 
   const createJob = () => {
+    // LINK 2: HTTPS URL
     axios.post('https://dotix-job-scheduler.vercel.app/jobs', { taskName, priority: 'High' })
-      .then(() => setTaskName(''));
+      .then(() => setTaskName(''))
+      .catch(err => console.error("Error creating job:", err));
   };
 
   const runJob = (id) => {
-    axios.post(`https://dotix-job-scheduler.vercel.app/run-job/${id}`);
+    // LINK 3: HTTPS URL (Note the backticks ` ` for ${id})
+    axios.post(`https://dotix-job-scheduler.vercel.app/run-job/${id}`)
+      .catch(err => console.error("Error running job:", err));
   };
 
   return (

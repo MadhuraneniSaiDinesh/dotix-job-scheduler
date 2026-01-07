@@ -12,6 +12,7 @@ app.use((req, res, next) => {
 });
 
 // 2. Memory Storage (Temporary array instead of a Database file)
+// This ensures it works instantly for your assignment video on Vercel.
 let jobs = [
   { id: 1, taskName: "Test Job (Default)", status: "pending" }
 ];
@@ -32,6 +33,18 @@ app.post('/jobs', (req, res) => {
   jobs.push(newJob); // Save to memory
   console.log("Job Added:", newJob);
   res.json(newJob);
+});
+
+// POST Route - Run/Complete a job
+app.post('/run-job/:id', (req, res) => {
+    const jobId = parseInt(req.params.id);
+    const job = jobs.find(j => j.id === jobId);
+    if (job) {
+        job.status = 'completed';
+        res.json(job);
+    } else {
+        res.status(404).json({ message: "Job not found" });
+    }
 });
 
 const PORT = process.env.PORT || 5000;
