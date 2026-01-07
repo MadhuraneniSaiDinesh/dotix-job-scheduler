@@ -10,18 +10,18 @@ function App() {
   // Auto-refresh every 2 seconds
   useEffect(() => {
     const interval = setInterval(() => {
-      axios.get('http://localhost:5000/jobs').then(res => setJobs(res.data));
+      axios.get('https://job-scheduler-rouge.vercel.app/jobs').then(res => setJobs(res.data));
     }, 2000);
     return () => clearInterval(interval);
   }, []);
 
   const createJob = () => {
-    axios.post('http://localhost:5000/jobs', { taskName, priority: 'High' })
+    axios.post('https://job-scheduler-rouge.vercel.app/jobs', { taskName, priority: 'High' })
       .then(() => setTaskName(''));
   };
 
   const runJob = (id) => {
-    axios.post(`http://localhost:5000/run-job/${id}`);
+    axios.post(`https://job-scheduler-rouge.vercel.app/run-job/${id}`);
   };
 
   return (
